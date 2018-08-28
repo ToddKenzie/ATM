@@ -1,17 +1,19 @@
 
 public class Atm {
 
-	private int balance;
+	private double balance;
+	private String requiredPin;
 
-	public Atm(int balance) {
+	public Atm(int balance, String requiredPin) {
 		this.balance = balance;
+		this.requiredPin = requiredPin;
 	}
 
-	public int getBalance() {
+	public double getBalance() {
 		return balance;
 	}
 
-	public void withdraw(int amount) {
+	public void withdraw(double amount) {
 		if (amount <= balance) {
 			balance -= amount;
 		} else {
@@ -19,8 +21,12 @@ public class Atm {
 		}
 	}
 
-	public void deposit(int amount) {
+	public void deposit(double amount) {
 		balance += amount;
+	}
+
+	public boolean allowAccess(String enteredPin) {
+		return (enteredPin.equals(requiredPin));
 	}
 
 }
