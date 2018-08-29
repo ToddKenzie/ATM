@@ -11,24 +11,24 @@ public class AtmClientApp {
 		Atm firstUserAccount = new Atm(10000, "5672");
 
 		boolean isEnteredPinCorrect = false;
-		int attemptsAtEnteringPin = 3;
+		int attemptsReaminAtEnteringPin = 3;
 		System.out.println("Hello ATM user.");
 		do {
 			System.out.print("Please enter your 4-digit PIN code: ");
 			String enteredPin = input.nextLine();
 			isEnteredPinCorrect = firstUserAccount.allowAccess(enteredPin);
 			if (!isEnteredPinCorrect) {
-				attemptsAtEnteringPin--;
-				System.out.print("PIN Incorrect. You have " + attemptsAtEnteringPin);
-				if (attemptsAtEnteringPin == 1) {
+				attemptsReaminAtEnteringPin--;
+				System.out.print("PIN Incorrect. You have " + attemptsReaminAtEnteringPin);
+				if (attemptsReaminAtEnteringPin == 1) {
 					System.out.println(" attempt remaining.");
 				} else {
 					System.out.println(" attempts remaining.");
 				}
 			}
-		} while (!isEnteredPinCorrect && attemptsAtEnteringPin > 0);
+		} while (!isEnteredPinCorrect && attemptsReaminAtEnteringPin > 0);
 
-		if (attemptsAtEnteringPin == 0) {
+		if (attemptsReaminAtEnteringPin == 0) {
 			System.out.println("You have exhausted your attempts.\nPlease call the bank to unlock your account.");
 			System.exit(0);
 		}
