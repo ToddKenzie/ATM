@@ -1,12 +1,15 @@
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class AtmClientApp {
 
 	public static void main(String[] args) {
-	
+
 		Scanner input = new Scanner(System.in);
+		NumberFormat currency = NumberFormat.getCurrencyInstance(Locale.US);
 		Atm firstUserAccount = new Atm(10000, "5672");
-		
+
 		boolean isEnteredPinCorrect = false;
 		int attemptsAtEnteringPin = 3;
 		System.out.println("Hello ATM user.");
@@ -24,21 +27,47 @@ public class AtmClientApp {
 				}
 			}
 		} while (!isEnteredPinCorrect && attemptsAtEnteringPin > 0);
-		
+
 		if (attemptsAtEnteringPin == 0) {
 			System.out.println("You have exhausted your attempts.\nPlease call the bank to unlock your account.");
 			System.exit(0);
 		}
 
 		System.out.println("Welcome to the Bank of We Can Code IT!");
-		
-//		String atmMenuInput = "";
-//		do {
-//			
-//		} while(!atmMenuInput.equals("4"));
-		
-		
-		
+
+		String atmMenuInput = "";
+		double amount;
+		do {
+			System.out.println("ATM Account Menu:");
+			System.out.println("Press 1 to deposit funds.\nPress 2 with withdraw funds.");
+			System.out.println("Press 3 to check your current balance.\nPress 4 to exit.");
+			atmMenuInput = input.nextLine();
+			if (atmMenuInput.equals("1")) {
+				System.out.println("How much would you like to deposit?");
+				amount = input.nextDouble();
+				firstUserAccount.deposit(amount);
+				input.nextLine();
+				System.out.println(currency.format(amount) + " deposited.  Current balance is "
+						+ currency.format(firstUserAccount.getBalance()));
+			} else if (atmMenuInput.equals("2")) {
+				System.out.println("How much would you like to withdraw?");
+				amount = input.nextDouble();
+				input.nextLine();
+				if (amount > firstUserAccount.getBalance()) {
+					System.out.println(currency.format(amount) + " exceeds current balance.  Will withdraw balance of " 
+							+ currency.format(firstUserAccount.getBalance()));
+				}
+				firstUserAccount.withdraw(amount);
+				System.out.println("Money withdrawn.");
+			} else if (atmMenuInput.equals("3")) {
+				System.out.println("Current balance is " + currency.format(firstUserAccount.getBalance()));
+			} else if (!atmMenuInput.equals("4")) {
+				System.out.println("Invalid menu input.");
+			}
+		} while (!atmMenuInput.equals("4"));
+
+		System.out.println("Thanks for banking with us!");
+
 		input.close();
 	}
 
